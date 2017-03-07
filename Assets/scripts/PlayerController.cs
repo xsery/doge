@@ -63,4 +63,9 @@ public class PlayerController : MonoBehaviour {
 		Anim.SetBool ("jump", !grounded);
         Anim.SetBool("slide", slide);
     }
+
+    void OnTriggerEnter2D()
+    {
+        Debug.Log("bateu");
+    }
 }
