@@ -1,19 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 	
 	public Animator Anim;
 	public Rigidbody2D	playerRigidbody;
-	public int 	forceJump;
-
+	public int 	forceJump;    
     public bool slide; 
 
 	//verifica o chao
 	public Transform GroundCheck;
 	public bool grounded;
 	public LayerMask whatIsGround;
+    public LevelManager _levelManager;
 
     //Slide
     public float slideTemp;
@@ -23,14 +25,14 @@ public class PlayerController : MonoBehaviour {
     public Transform colisor;
 
 	// Use this for initialization
-	void Start () {
-
-			
+	void Start ()
+    {
+        _levelManager = FindObjectOfType<LevelManager>();			
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
+	void Update ()
+    {
 		if(Input.GetButtonDown("Jump") && grounded ){
 			playerRigidbody.AddForce (new Vector2(0,forceJump));
             if (slide == true)
@@ -38,7 +40,6 @@ public class PlayerController : MonoBehaviour {
                 colisor.position = new Vector3(colisor.position.x, colisor.position.y + 0.8f, colisor.position.z);
             }
             slide = false;
-
 	}
 
         if (Input.GetButtonDown("Slide") && grounded){
@@ -64,8 +65,21 @@ public class PlayerController : MonoBehaviour {
         Anim.SetBool("slide", slide);
     }
 
-    void OnTriggerEnter2D()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("bateu");
+
+        if (other.tag == "Hidrante")
+        {
+            Debug.Log("colidiu");
+        }         
     }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Hidrante")
+        {            
+            SceneManager.LoadScene("GameOver");
+        }
+    }
+
 }
