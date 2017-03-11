@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scene/GameOver.unity
+- path: C:/Users/xsery/Documents/Prosperos/Game/Assets/Scenes/1_DanceHall.unity
   isLoaded: 1
   isActive: 1
